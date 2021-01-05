@@ -7,12 +7,12 @@ library(RColorBrewer)
 
 options(scipen = 999)
 
-WDB_1999 <- read_csv("data/WDB_1999.csv")
+gamingdata_samp <- read_csv("data/gamingdata_samp.csv")
 
 ## Section 1: ggplot2 vs plot ==================================================
 
-  ## Exercise 1: Plotting *birthrate* against *deathrate* using both the 
-  ## `plot()` and `ggplot()` function, discuss which has more potential in displaying data clearly.
+  ## Exercise 1: Plotting *SPIN_T* against *Age* using both the `plot()` and `ggplot()` function, 
+  ## discuss which has more potential in displaying data clearly.
 
   ## Plotting using plot()
 
@@ -24,24 +24,23 @@ WDB_1999 <- read_csv("data/WDB_1999.csv")
 
     ggplot(data = ??, 
        mapping = aes(
-         x = ??
-         y = ??
+         x = ??,
+         y = ??,
          )) + 
        geom_point()
   
-  ## Exercise 2: Expand the plot to group these points by Continent, 
+  ## Exercise 2: Expand the plot to group these points by Gender, 
   ## which provides us with more information and is easier to achieve? 
-  ## Remember, you'll need to recode WDB_1999$Continent as a factor using the function:
+  ## Remember, you'll need to recode gamingdata_samp$Gender as a factor using the function:
   
 
   ## Plotting using plot()
   
-    WDB_1999$Continent <- as.factor(WDB_1999$Continent)
+    gamingdata_samp$Gender <- as.factor(gamingdata_samp$Gender)
   
     plot(data = ??,
          y-var ~ x-var,
-         col(c("blue", "light blue", "red", "pink", 
-               "green", "dark green", "black", "purple")[??])))
+         col = (c("blue", "red")[??])))
 
   ## Plotting using ggplot()
 
@@ -53,11 +52,10 @@ WDB_1999 <- read_csv("data/WDB_1999.csv")
          )) + 
     geom_point()
 
-## Section 2: Scatter Plots in ggplot ==========================================
+## Section 2: Basic Plotting Using ggplot ======================================
 
-  ## Exercise 3: Change the size parameter to *ed.years* to see if there is a,
-  ## trend between amount of years in Education and the Birth and Death Rate, 
-  ## set the alpha parameter to 0.5 to clearly see the relationships.
+  ## Exercise 3: Change the size parameter to *Hours* to see if there is a trend 
+  ## between the amount of hours, age and total SPIN score.
 
   ggplot(data = ??, 
          mapping = aes(
@@ -66,55 +64,59 @@ WDB_1999 <- read_csv("data/WDB_1999.csv")
            colour = ??,
            size = ??
          )) +
-    geom_point(alpha = ??)
+    geom_point()
+  
+  ## Exercise 4: Change the geom, from *geom_point()* to *geom_jitter()* and 
+  ## change the alpha parameter to 0.5 to more clearly see the relationship
+  
+  
 
-  ## Exercise 4: Change the Labels on the X and Y axis' and provide 
+  ## Exercise 5: Change the Labels on the X and Y axis' and provide 
   ## a suitable title for the graph
 
   + labs(x = ??,
        y = ??,
        title = ??)
 
-## Section 3: Bar Charts and Histograms ========================================
-
-  ## Exercise 5: Using the parameter `stat = "identity"` within the `geom_bar()`,
-  ## function, create a bar chart of `Continent` plotted against the mean `birthrate` or `deathrate`
-
-  ggplot(data = ??) + 
-    geom_bar(stat = "identity", 
-             mapping = aes(x = ??, 
-                           y = mean(??, na.rm = TRUE))) 
-
-  ## Exercise 6:  Using the function `geom_histogram()` create a histogram of 
-  ## the *birthrate* and *deathrate* ** 
-
-  ggplot(data = ??) + 
-    geom_histogram(mapping = aes(x = ??), colour = "blue", alpha = 0.5) + 
-    geom_histogram(mapping = aes(x = ??), colour = "red", alpha = 0.5)
-
-## Section 4: Adding density plots to Histograms ===============================
+## Section 3: Different geom's different plots =================================
   
-  ## Exercise 7: Using the plot created in exercise 6, add the y-variable `..density..` 
-  ## and `binwidth = 1` to `geom_histogram()` in addition to adding `geom_density()` 
-  ## to add density lines to the Histogram**
+  ## Exercise 6: Using *geom_bar()* plot the number of different cases in each gender
+  ggplot(data = gamingdata_samp,
+         mapping = aes(x = ??)) + 
+    geom_bar()
+  
+  
+  ## Exercise 7: Expand upon the *geom_bar()* plot, to determine the average 
+  ## (mean) number of Hours played by each gender.
+  # Hint: Ensure to add *stat = "summary"* into your *geom_bar()* function.
+  
+  ggplot(data = gamingdata_samp,
+         mapping = aes(x = ??, y = ??)) + 
+    geom_bar(stat = "summary")
   
 
-  ggplot(data = ??) + 
-    geom_histogram(mapping = aes(x = ??, y = ..density..), binwidth = 1, 
-                   colour = "blue", alpha = 0.5) + 
-    geom_histogram(mapping = aes(x = ??, y = ..density..), binwidth = 1, 
-                   colour = "red", alpha = 0.5) + 
-    geom_density(mapping = aes(x = ??), colour = "blue", alpha = 0.5) + 
-    geom_density(mapping = aes(x = ??), colour = "red", alpha = 0.5)
+  ## Exercise 8: Expanding again on the plot created in Exercise 6, 
+  ## after using the following code to convert the Platform variable into a factor, 
+  ## specify the fill value to Platform.
 
-  ## Exercise 8: Add the parameter, `adjust = 2` in the density plot, 
-  ## to smooth this link and make it more easily interpretable**
-
-  geom_density(mapping = aes(x = ??))
-
-## Section 5: Extra Useful Tips and FunctionS ==================================
+  gamingdata_samp$Platform <- as.factor(gamingdata_samp$Platform)
   
-  ## Exercise 9: Use the `ggsave()` function to save your last plot**
+  ggplot(data = gamingdata_samp,
+         mapping = aes(x = ??, fill = ??)) + 
+    geom_bar()
+  
+  ## Exercise 9: Through adding the appropriate limits function 
+  ## (xlim(), ylim(), lims()) in ggplot() set the upper threshold of your plot to 5,000
 
-  ggsave(filename = ??, 
-         plot = last_plot())
+
+## Section 4: Customization Part 1 =============================================
+  
+  ## Exercise 10: Using all the customization skills we have already discussed 
+  ## (labs(), lims() and geom's), examine the relationship between an individuals Age, 
+  ## Number of Hours playing, their employment and what platform they use. 
+  ## Once completed, add one of the following themes to the end of your code, 
+  ## which looks best (to you): 
+  
+  ## theme_bw(), theme_minimal(), theme_void(), theme_dark(), theme_classic()
+  ## Hint: Consider using the mapping aesthetics such as *colour*, *size*, *shape*, 
+  ## *alpha* etc, to map the categorical variables.
