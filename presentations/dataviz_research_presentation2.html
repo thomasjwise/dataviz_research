@@ -3112,7 +3112,70 @@ slide:not(.current) .plotly.html-widget{
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
-            
+            code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+        
   </style>
 
 
@@ -3168,7 +3231,82 @@ slide:not(.current) .plotly.html-widget{
 <li>Review and Conclusion (5 minutes)</li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section"></article></slide>
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Last Session Review</h2></hgroup><article  id="last-session-review">
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Part 1</h2></hgroup><article  id="part-1">
+
+</article></slide><slide class=""><hgroup><h2>Layering Geoms</h2></hgroup><article  id="layering-geoms">
+
+<p>To layer geoms, simply add an additional geom layer to your ggplot() function. If you are using different <em>mapping = aes()</em> remember to relocate them to within the appropriate function.</p>
+
+<p>For example:</p>
+
+<pre class = 'prettyprint lang-r'>ggplot(data = diamonds, mapping = aes(x, y)) + 
+  geom_point()</pre>
+
+<p>Should become</p>
+
+<pre class = 'prettyprint lang-r'>ggplot(data = diamonds) + 
+  geom_point(mapping = aes(x, y)) + 
+  geom_point(mapping = aes(x, y))</pre>
+
+</article></slide><slide class=""><hgroup><h2>Adding Legends (Colour, discrete)</h2></hgroup><article  id="adding-legends-colour-discrete">
+
+<p>If you are using a discrete variable, you can use the function: <em>scale_colour_identity()</em>. In which you can specify the exact <em>breaks()</em>, <em>labels</em>, and how to present it <em>guide = &ldquo;legend&rdquo;</em>.</p>
+
+<pre class = 'prettyprint lang-r'>+ scale_colour_identity(name = ??,
+                        breaks = c(??, ??),
+                        labels = c(??, ??),
+                        guide = &quot;legend&quot;)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Colour gradients</h2></hgroup><article  id="colour-gradients">
+
+<p>If you are using a continuous variable, you can use the function: <em>scale_colour_gradient()</em>. In this function you can specify the <em>low</em> and <em>high</em> points as well as the breaks.</p>
+
+<pre class = 'prettyprint lang-r'>+ scale_colour_gradient(low = ??, 
+                        high = ??,
+                        breaks = ??)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Faceting</h2></hgroup><article  id="faceting">
+
+<p>Rather than layering plots, you can also present them side by side with <em>facet_wrap()</em> or <em>facet_grid()</em>.</p>
+
+<p>You can use it like so; this can be added simply to the end of your ggplot() function. This can be used to specify the rows or columns.</p>
+
+<pre class = 'prettyprint lang-r'>+ facet_grid(.~ ??)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Saving and Publishing Plots</h2></hgroup><article  id="saving-and-publishing-plots">
+
+<div style="float: left; width: 50%;">
+<pre class = 'prettyprint lang-r'>ggsave(filename,
+       plot = last_plot(),
+       height, 
+       width, 
+       dpi)</pre>
+
+<p>Easily set the file type by following the <em>filename</em> with the format (.jpeg, .png).</p>
+
+<p>You can also change <em>last_plot()</em>, to a gg-variable.</p></div>
+
+<div style="float: right; width: 50%;">
+<ul>
+<li>Available formats:
+
+<ul>
+<li>JPEG, .jpeg</li>
+<li>PNG, .png</li>
+<li>PDF, .pdf</li>
+<li>TIFF, .tiff</li>
+<li>SVG, .svg</li>
+<li>EPS, .eps</li>
+</ul></li>
+</ul></div>
+
+</article></slide><slide class=""><hgroup><h2>Saving and Publishing Plots</h2></hgroup><article  id="saving-and-publishing-plots-1">
+
+<p>Alternatively, you can also use the <em>export</em> tab in RStudio Plots Panel to export as an <em>image</em> or <em>pdf</em>.</p>
+
+<p>This GUI method works in the same function as <em>ggsave()</em> but can be easily used if you’d prefer.</p></article></slide>
 
 
   <slide class="backdrop"></slide>

@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
@@ -43,4 +43,102 @@ library(tidyverse)
 
 # Part 1
 
-## 
+## Layering Geoms 
+
+To layer geoms, simply add an additional geom layer to your ggplot() function. If you are using different *mapping = aes()* remember to relocate them to within the appropriate function.
+
+For example: 
+
+```{r, eval = FALSE}
+
+ggplot(data = diamonds, mapping = aes(x, y)) + 
+  geom_point()
+
+```
+
+Should become 
+
+```{r, eval = FALSE}
+
+ggplot(data = diamonds) + 
+  geom_point(mapping = aes(x, y)) + 
+  geom_point(mapping = aes(x, y))
+
+```
+
+## Adding Legends (Colour, discrete)
+
+If you are using a discrete variable, you can use the function: *scale_colour_identity()*. In which you can specify the exact *breaks()*, *labels*, and how to present it *guide = "legend"*. 
+
+```{r, eval = FALSE}
+
++ scale_colour_identity(name = ??,
+                        breaks = c(??, ??),
+                        labels = c(??, ??),
+                        guide = "legend")
+
+```
+
+
+
+## Colour gradients 
+
+If you are using a continuous variable, you can use the function: *scale_colour_gradient()*. In this function you can specify the *low* and *high* points as well as the breaks. 
+
+```{r, eval = FALSE}
+
++ scale_colour_gradient(low = ??, 
+                        high = ??,
+                        breaks = ??)
+
+```
+
+## Faceting
+
+Rather than layering plots, you can also present them side by side with *facet_wrap()* or *facet_grid()*. 
+
+You can use it like so; this can be added simply to the end of your ggplot() function. This can be used to specify the rows or columns. 
+
+```{r, eval = FALSE}
+
++ facet_grid(.~ ??)
+
+```
+
+## Saving and Publishing Plots 
+
+<div style="float: left; width: 50%;">
+
+```{r, eval = FALSE}
+
+ggsave(filename,
+       plot = last_plot(),
+       height, 
+       width, 
+       dpi)
+
+```
+
+Easily set the file type by following the *filename* with the format (.jpeg, .png). 
+
+You can also change *last_plot()*, to a gg-variable.
+
+</div>
+<div style="float: right; width: 50%;">
+
+- Available formats:
+  - JPEG, .jpeg 
+  - PNG, .png
+  - PDF, .pdf 
+  - TIFF, .tiff
+  - SVG, .svg
+  - EPS, .eps
+
+</div>
+
+## Saving and Publishing Plots 
+
+Alternatively, you can also use the *export* tab in RStudio Plots Panel to export as an *image* or *pdf*. 
+
+This GUI method works in the same function as *ggsave()* but can be easily used if you'd prefer. 
+
